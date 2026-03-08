@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <!-- Primary Meta Tags -->
+    <title>Projects - Bashir Garguom | Commercial Films & Brand Visuals</title>
+    <meta name="title" content="Projects - Bashir Garguom | Commercial Films & Brand Visuals">
+    <meta name="description" content="A selection of commercial films, brand visuals, and creative work by Bashir Garguom. Cinematic visual storytelling for brands, campaigns, and modern commercial work.">
+    <meta name="keywords" content="commercial films, brand videos, visual campaigns, filmmaker portfolio, commercial video production">
+    <meta name="author" content="Bashir Garguom">
+    <link rel="canonical" href="/projects.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://bashirgarguom.com/projects.html">
+    <meta property="og:title" content="Projects - Bashir Garguom">
+    <meta property="og:description" content="A selection of commercial films, brand visuals, and creative work.">
+    <meta property="og:image" content="https://bashirgarguom.com/images/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://bashirgarguom.com/projects.html">
+    <meta name="twitter:title" content="Projects - Bashir Garguom">
+    <meta name="twitter:description" content="A selection of commercial films, brand visuals, and creative work.">
+    <meta name="twitter:image" content="https://bashirgarguom.com/images/og-image.jpg">
+    
+    <link rel="stylesheet" href="styles.css?v=3.0">
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Bashir Garguom</a>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links" id="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="projects.html" class="nav-link active">Projects</a>
+                <a href="index.html#contact" class="nav-cta">Get in touch →</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="projects-page">
+            <div class="container">
+                <div class="projects-page-header">
+                    <h1 class="page-title">Projects</h1>
+                    <p class="projects-page-intro">A selection of commercial films, brand visuals, and creative work.</p>
+                </div>
+                <div class="projects-grid" id="all-projects-grid">
+                    <!-- Projects will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Bashir Garguom. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="config.js" defer></script>
+    <script src="public-api.js" defer></script>
+    <script src="script.js?v=3.0" defer></script>
+    <script>
+        // Load all projects on projects page after scripts are loaded
+        function initProjectsPage() {
+            if (typeof loadAllProjects === 'function' && document.getElementById('all-projects-grid')) {
+                loadAllProjects();
+            } else if (document.getElementById('all-projects-grid')) {
+                // Retry if scripts not loaded yet
+                setTimeout(initProjectsPage, 100);
+            }
+        }
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initProjectsPage);
+        } else {
+            initProjectsPage();
+        }
+    </script>
+</body>
+</html>

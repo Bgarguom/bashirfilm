@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <!-- Primary Meta Tags (will be updated dynamically) -->
+    <title>Project - Bashir Garguom</title>
+    <meta name="title" content="Project - Bashir Garguom">
+    <meta name="description" content="Commercial film project by Bashir Garguom">
+    <meta name="keywords" content="commercial film, brand video, filmmaker">
+    <meta name="author" content="Bashir Garguom">
+    
+    <!-- Open Graph / Facebook (will be updated dynamically) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="Project - Bashir Garguom">
+    <meta property="og:description" content="Commercial film project">
+    <meta property="og:image" content="">
+    
+    <!-- Twitter (will be updated dynamically) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="">
+    <meta name="twitter:title" content="Project - Bashir Garguom">
+    <meta name="twitter:description" content="Commercial film project">
+    <meta name="twitter:image" content="">
+    
+    <link rel="stylesheet" href="styles.css?v=3.0">
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Bashir Garguom</a>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links" id="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="projects.html" class="nav-link">Projects</a>
+                <a href="index.html#contact" class="nav-cta">Get in touch →</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="project-page">
+            <div class="container">
+                <a href="projects.html" class="back-link">← Back to Projects</a>
+                <div id="project-content">
+                    <!-- Project content will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Bashir Garguom. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="config.js" defer></script>
+    <script src="public-api.js" defer></script>
+    <script src="video-embed.js" defer></script>
+    <script src="script.js?v=3.0" defer></script>
+    <script>
+        // Load project details on project page after scripts are loaded
+        function initProjectPage() {
+            if (typeof loadProjectDetails === 'function' && document.getElementById('project-content')) {
+                loadProjectDetails();
+            } else if (document.getElementById('project-content')) {
+                // Retry if scripts not loaded yet
+                setTimeout(initProjectPage, 100);
+            }
+        }
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initProjectPage);
+        } else {
+            initProjectPage();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+{
+  "projects": [
+    {
+      "id": "project-1",
+      "title": "Brand Campaign 2024",
+      "headline": "A cinematic journey through modern storytelling",
+      "description": "A visually stunning commercial campaign that captures the essence of contemporary brand storytelling. This project showcases the power of cinematic visuals in commercial advertising.",
+      "client": "Brand Name",
+      "role": "Director & Cinematographer",
+      "year": "2024",
+      "thumbnail": "images/project-1-thumb.jpg",
+      "media": {
+        "type": "video",
+        "url": "videos/project-1.mp4",
+        "poster": "images/project-1-poster.jpg"
+      }
+    },
+    {
+      "id": "project-2",
+      "title": "Fashion Film",
+      "headline": "Elegance meets motion in this visual narrative",
+      "description": "An elegant fashion film that blends artistic vision with commercial appeal. The project explores the relationship between movement, light, and fabric.",
+      "client": "Fashion Brand",
+      "role": "Director",
+      "year": "2024",
+      "thumbnail": "images/project-2-thumb.jpg",
+      "media": {
+        "type": "image",
+        "url": "images/project-2-main.jpg"
+      }
+    },
+    {
+      "id": "project-3",
+      "title": "Documentary Short",
+      "headline": "Real stories told through cinematic lens",
+      "description": "A documentary short that captures authentic human stories with cinematic quality. This project demonstrates the ability to blend documentary authenticity with visual artistry.",
+      "client": "Production Company",
+      "role": "Director & Editor",
+      "year": "2023",
+      "thumbnail": "images/project-3-thumb.jpg",
+      "media": {
+        "type": "video",
+        "url": "videos/project-3.mp4",
+        "poster": "images/project-3-poster.jpg"
+      }
+    },
+    {
+      "id": "project-4",
+      "title": "Product Launch",
+      "headline": "Innovation visualized through motion",
+      "description": "A dynamic product launch film that showcases innovation through carefully crafted visuals and pacing. The project highlights product features while maintaining cinematic quality.",
+      "client": "Tech Company",
+      "role": "Director & Cinematographer",
+      "year": "2023",
+      "thumbnail": "images/project-4-thumb.jpg",
+      "media": {
+        "type": "video",
+        "url": "videos/project-4.mp4",
+        "poster": "images/project-4-poster.jpg"
+      }
+    }
+  ]
+}

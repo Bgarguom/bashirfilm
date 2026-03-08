@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Bashir Garguom</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="admin.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div class="admin-dashboard">
+        <div class="admin-header">
+            <h1>Projects</h1>
+            <div class="admin-header-actions">
+                <button class="btn btn-secondary" onclick="openSiteSettingsModal()">Site Settings</button>
+                <button class="btn btn-primary" onclick="openProjectModal()">+ Add Project</button>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+        </div>
+
+        <div class="admin-container">
+            <div id="projects-list" class="projects-list">
+                <div class="loading">Loading projects...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Site Settings Modal -->
+    <div id="site-settings-modal" class="modal-overlay" style="display: none;">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Site Settings</h2>
+                <button class="modal-close" onclick="closeSiteSettingsModal()">&times;</button>
+            </div>
+            <form id="site-settings-form" class="modal-body">
+                <div class="form-group">
+                    <label>Hero Portrait Image</label>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.75rem;">
+                        Upload a portrait image to display in the hero section (recommended: 280x280px, square)
+                    </p>
+                    <div class="file-upload-area" onclick="document.getElementById('hero-portrait-input').click()">
+                        <p>Click to upload or drag and drop</p>
+                        <input type="file" id="hero-portrait-input" class="file-upload-input" accept="image/*">
+                    </div>
+                    <div style="margin-top: 0.5rem;">
+                        <input type="url" id="hero-portrait-url" placeholder="Or paste image URL here" style="width: 100%; padding: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.05); border-radius: 4px; color: var(--text-primary); font-size: 0.9rem;">
+                    </div>
+                    <div id="hero-portrait-preview" class="uploaded-files" style="margin-top: 1rem;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>About Me Background Image</label>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.75rem;">
+                        Upload a square image for the About Me section background (recommended: 800x800px, square)
+                    </p>
+                    <div class="file-upload-area" onclick="document.getElementById('about-bg-input').click()">
+                        <p>Click to upload or drag and drop</p>
+                        <input type="file" id="about-bg-input" class="file-upload-input" accept="image/*">
+                    </div>
+                    <div style="margin-top: 0.5rem;">
+                        <input type="url" id="about-bg-url" placeholder="Or paste image URL here" style="width: 100%; padding: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.05); border-radius: 4px; color: var(--text-primary); font-size: 0.9rem;">
+                    </div>
+                    <div id="about-bg-preview" class="uploaded-files" style="margin-top: 1rem;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Contact Section Image</label>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.75rem;">
+                        Upload an image for the Contact section (recommended: 800x600px, landscape)
+                    </p>
+                    <div class="file-upload-area" onclick="document.getElementById('contact-image-input').click()">
+                        <p>Click to upload or drag and drop</p>
+                        <input type="file" id="contact-image-input" class="file-upload-input" accept="image/*">
+                    </div>
+                    <div style="margin-top: 0.5rem;">
+                        <input type="url" id="contact-image-url" placeholder="Or paste image URL here" style="width: 100%; padding: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.05); border-radius: 4px; color: var(--text-primary); font-size: 0.9rem;">
+                    </div>
+                    <div id="contact-image-preview" class="uploaded-files" style="margin-top: 1rem;"></div>
+                </div>
+
+                <hr style="border: none; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 2rem 0;">
+
+                <h3 style="color: var(--text-primary); font-size: 1.1rem; margin-bottom: 1.5rem; font-weight: 600;">Contact Information</h3>
+
+                <div class="form-group">
+                    <label for="contact-email">Email Address</label>
+                    <input type="email" id="contact-email" placeholder="hello@bashirgarguom.com" style="width: 100%; padding: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.05); border-radius: 4px; color: var(--text-primary); font-size: 0.9rem;">
+                    <small style="color: var(--text-secondary); font-size: 0.75rem;">Email address for contact button</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="contact-phone">Phone Number</label>
+                    <input type="tel" id="contact-phone" placeholder="+218XXXXXXXXX" style="width: 100%; padding: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.05); border-radius: 4px; color: var(--text-primary); font-size: 0.9rem;">
+                    <small style="color: var(--text-secondary); font-size: 0.75rem;">Phone number for contact button (include country code, e.g., +218)</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="contact-whatsapp">WhatsApp Number</label>
+                    <input type="tel" id="contact-whatsapp" placeholder="+218XXXXXXXXX" style="width: 100%; padding: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.05); border-radius: 4px; color: var(--text-primary); font-size: 0.9rem;">
+                    <small style="color: var(--text-secondary); font-size: 0.75rem;">WhatsApp number for WhatsApp button (include country code, e.g., +218)</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="contact-instagram">Instagram URL</label>
+                    <input type="url" id="contact-instagram" placeholder="https://instagram.com/bashirgarguom" style="width: 100%; padding: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.05); border-radius: 4px; color: var(--text-primary); font-size: 0.9rem;">
+                    <small style="color: var(--text-secondary); font-size: 0.75rem;">Full Instagram profile URL</small>
+                </div>
+
+                <div id="form-error" class="error-message" style="display: none;"></div>
+                <div id="form-success" class="success-message" style="display: none;"></div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeSiteSettingsModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Settings</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Project Modal -->
+    <div id="project-modal" class="modal-overlay" style="display: none;">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">Add Project</h2>
+                <button class="modal-close" onclick="closeProjectModal()">&times;</button>
+            </div>
+            <form id="project-form" class="modal-body">
+                <input type="hidden" id="project-id">
+                
+                <div class="form-group">
+                    <label for="project-title">Title *</label>
+                    <input type="text" id="project-title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="project-slug">Slug *</label>
+                    <input type="text" id="project-slug" required pattern="[a-z0-9-]+" title="Lowercase letters, numbers, and hyphens only">
+                    <small style="color: var(--text-secondary); font-size: 0.75rem;">URL-friendly identifier (e.g., brand-campaign-2024)</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="project-headline">Headline *</label>
+                    <input type="text" id="project-headline" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="project-description">Description *</label>
+                    <textarea id="project-description" required></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="project-client">Client</label>
+                        <input type="text" id="project-client">
+                    </div>
+                    <div class="form-group">
+                        <label for="project-year">Year</label>
+                        <input type="text" id="project-year" pattern="[0-9]{4}" title="4-digit year">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="project-video-url">Video URL</label>
+                    <input type="url" id="project-video-url" placeholder="https://www.youtube.com/watch?v=..." style="width: 100%; margin-bottom: 0.5rem;">
+                    <button type="button" id="generate-thumbnail-btn" class="btn btn-secondary" style="width: 100%; padding: 0.75rem 1rem; margin-bottom: 0.5rem; font-size: 0.95rem;">🎬 Generate Thumbnail from Video</button>
+                    <small style="color: var(--text-secondary); font-size: 0.75rem; display: block;">Supports YouTube, Vimeo, and direct video files</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Cover Image *</label>
+                    <div class="file-upload-area" onclick="document.getElementById('cover-image-input').click()">
+                        <p>Click to upload or drag and drop</p>
+                        <input type="file" id="cover-image-input" class="file-upload-input" accept="image/*">
+                    </div>
+                    <div id="cover-image-preview" class="uploaded-files"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Gallery Images</label>
+                    <div class="file-upload-area" onclick="document.getElementById('gallery-images-input').click()">
+                        <p>Click to upload or drag and drop multiple images</p>
+                        <input type="file" id="gallery-images-input" class="file-upload-input" accept="image/*" multiple>
+                    </div>
+                    <div id="gallery-images-preview" class="uploaded-files"></div>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="project-featured">
+                        <label for="project-featured">Featured Project</label>
+                    </div>
+                </div>
+
+                <div id="form-error" class="error-message" style="display: none;"></div>
+                <div id="form-success" class="success-message" style="display: none;"></div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeProjectModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="submit-btn">Save Project</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../config.js"></script>
+    <script>
+        // Small delay to ensure config.js is fully loaded
+        // Verify functions are available
+        (function checkConfig() {
+            if (typeof window.initSupabase === 'function' && typeof window.getSupabase === 'function') {
+                // Make available globally
+                if (typeof initSupabase === 'undefined') {
+                    window.initSupabase = window.initSupabase;
+                }
+                if (typeof getSupabase === 'undefined') {
+                    window.getSupabase = window.getSupabase;
+                }
+                console.log('✓ config.js loaded successfully');
+            } else {
+                console.error('✗ config.js not loaded properly');
+                console.log('window.initSupabase:', typeof window.initSupabase);
+                console.log('window.getSupabase:', typeof window.getSupabase);
+            }
+        })();
+    </script>
+    <script src="local-storage.js"></script>
+    <script src="video-thumbnail.js"></script>
+    <script src="admin-auth.js"></script>
+    <script src="admin-dashboard.js"></script>
+</body>
+</html>
